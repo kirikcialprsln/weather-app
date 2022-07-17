@@ -6,4 +6,5 @@ from accounts import views
 urlpatterns = [
     path('login/', views.LoginPage.as_view(), name='login'),
     path('logout/', login_required(views.logout_view), name='logout'),
+    path('list/', login_required(views.list_users), name="list_users")
 ]

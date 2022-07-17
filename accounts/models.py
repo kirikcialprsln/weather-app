@@ -30,7 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             ('superuser', _('Yönetici')),
             ('user', _('Kullanıcı')),
         ),
-        default='seller',
+        default='user',
         help_text=_('Kullanıcının sitedeki erişim sınırını belirler.')
     )
     last_login = models.DateTimeField(

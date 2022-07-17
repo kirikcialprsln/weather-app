@@ -1,0 +1,84 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Kullanici Listeleme{% endblock %}
+
+{% block head %}
+    <!-- Custom styles for this page -->
+    <link href="{{ static_url }}vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Kullanici Listeleme</h1>
+    <p class="mb-4">Sistem ekli olan kullanicilar listelenmistir.</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Kullanicilar</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Kullanici Adi</th>
+                        <th>E-posta</th>
+                        <th>Kullanici Ad ve Soyad</th>
+                        <th>Durum</th>
+                        <th>Yetki</th>
+                        <th>Islemler</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Kullanici Adi</th>
+                        <th>E-posta</th>
+                        <th>Kullanici Ad ve Soyad</th>
+                        <th>Durum</th>
+                        <th>Yetki</th>
+                        <th>Islemler</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email|default_if_none:"----" }}</td>
+                            <td>{{ user.get_full_name }}</td>
+                            <td>
+                                {% if user.is_active %}
+                                    Aktif
+                                {% else %}
+                                    Pasif
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.user_permission == "superuser" %}
+                                    Yonetici
+                                {% else %}
+                                    Kullanici
+                                {% endif %}
+                            </td>
+                            <td>Duzenle / Sil</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <!-- Page level plugins -->
+    <script src="{{ static_url }}vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ static_url }}vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ static_url }}js/demo/datatables-demo.js"></script>
+{% endblock %}
